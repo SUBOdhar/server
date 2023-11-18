@@ -1,0 +1,20 @@
+name: Update Local Repo
+
+on:
+  schedule:
+    - cron: '0 0 * * Sun' # Run every week on Sunday
+
+jobs:
+  update-local-repo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+        with:
+          repository: SUBOdhar/server
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Local Repo
+        run: |
+          git fetch origin
+          git reset --hard origin/main
