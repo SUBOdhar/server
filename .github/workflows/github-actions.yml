@@ -1,8 +1,6 @@
 name: Update Local Repo
 
-on:
-  schedule:
-    - cron: '0 0 * * Sun' # Run every week on Sunday
+on: push # Run every week on Sunday
 
 jobs:
   update-local-repo:
