@@ -1,6 +1,9 @@
-name: Update Local Repo
+name: Update Local Repo On Push
 
-on: push # Run every week on Sunday
+on:
+  push:
+    branches:
+      - main # Change to your default branch
 
 jobs:
   update-local-repo:
@@ -8,9 +11,6 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
-        with:
-          repository: SUBOdhar/server
-          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update Local Repo
         run: |
