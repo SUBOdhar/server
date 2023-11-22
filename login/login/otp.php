@@ -1,8 +1,7 @@
 <html lang="en">
 <?php
-$email = $_POST['Email'];
-$usr = $_POST['username'];
-
+$email = $_POST['email'];
+$usr = $_POST['Username'];
 $pass = $_POST['password'];
 $output = shell_exec("python3 /login/login/email/e.py " . $email);
 ?>

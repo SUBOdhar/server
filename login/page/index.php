@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
-<?php if (!$_COOKIE["token"]) {
+
+<?php
+if (isset($_COOKIE["token"])) {
+    // Redirect to login/page if the user is not logged in
     header('location:/login/login/');
+    exit();
 }
 
-$db3 = new SQLite3('prd.db');
-$sql = <<<EOF
 
-SELECT * from inf;
-EOF;
-$ret = $db->query($sql);
 
- ?>
+try {
+    $db = new SQLite3('prd.db');
+    $sql = "SELECT * FROM inf";
+    $ret = $db->query($sql);
+} catch (Exception $e) {
+    // Handle database connection or query errors
+    echo "Error: " . $e->getMessage();
+}
+?>
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -20,7 +27,6 @@ $ret = $db->query($sql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="style-form.css">
-
 </head>
 
 <body>
@@ -32,14 +38,12 @@ $ret = $db->query($sql);
         </p>
     </nav>
     <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><ion-icon
-                name="close-outline"></ion-icon></a>
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><ion-icon name="close-outline"></ion-icon></a>
         <a href="#">About</a>
         <a href="#">Services</a>
         <a href="#">Clients</a>
         <a href="#">Contact</a>
     </div>
-
     <ul class="product-form" id="product-form">
         <form action="add.php" method="post">
             <li class="box-form">
@@ -81,56 +85,54 @@ $ret = $db->query($sql);
             </div>
         </form>
     </ul>
-    <ul class="product" id="product">
-        
+    <?php
     while ($row = $ret->fetchArray(SQLITE3_ASSOC)) {
-    $i = $row['id'];
-}<li class="box">
-            <div id="name" class="name">
-                <div class="inname">
-                    <i class="fas fa-cube"></i> Name:
-                </div>SUbod
-            </div>
-            <div id="qty" class="qty">
-                <div class="inname">
-                    <i class="fas fa-shopping-cart"></i> Quantity:
-                </div> 10
-            </div>
-            <div id="batchno" class="batchno">
-                <div class="inname">
-                    <i class="fas fa-barcode"></i> Batch no:
-                </div> BADSA1
-            </div>
-            <div id="mfd" class="mfd">
-                <div class="inname">
-                    <i class="fas fa-calendar-alt"></i> MFD:
-                </div> 2323
-            </div>
-            <div id="expir" class="expir">
-                <div class="inname">
-                    <i class="fas fa-calendar-times"></i> EXD:
-                </div> 3242
-            </div>
-        </li>
-    </ul>
-    <div id="myModal" class="modal">
+        $i = $row['id'];
+    ?>
+        <ul class="product" id="product">
 
-        <!-- Modal content -->
-        <div class="modal-content">
+            <li class="box">
+                <div class="name">
+                    <div class="inname">
+                        <i class="fas fa-cube"></i> Name:
+                    </div><?php echo $row['name']; ?>
+                </div>
+                <div class="qty">
+                    <div class="inname">
+                        <i class="fas fa-shopping-cart"></i> Quantity:
+                    </div><?php echo $row['qty']; ?>
+                </div>
+                <div class="batchno">
+                    <div class="inname">
+                        <i class="fas fa-barcode"></i> Batch no:
+                    </div><?php echo $row['batch']; ?>
+                </div>
+                <div class="mfd">
+                    <div class="inname">
+                        <i class="fas fa-calendar-alt"></i> Manufacture date:
+                    </div><?php echo $row['mfd']; ?>
+                </div>
+                <div class="expir">
+                    <div class="inname">
+                        <i class="fas fa-calendar-times"></i> Expiry date:
+                    </div><?php echo $row['exd']; ?>
+                </div>
+                <div class="mrp">
+                    <div class="inname">
+                        <ion-icon name="cash-outline"></ion-icon> MRP:
+                    </div><?php echo $row['mrp']; ?>
+                </div>
+                <!-- Add other product details similarly -->
+            </li>
 
-            <div class="ring">Loading
-                <span></span>
-            </div>
-        </div>
-
-    </div>
+        </ul>
+    <?php } ?>
 
     <div class="add" onclick="add()">
         <ion-icon name="add-outline" style="font-size: 40px;color: white;"></ion-icon>
     </div>
 
     <script src="script.js"></script>
-
 </body>
 
 </html>
