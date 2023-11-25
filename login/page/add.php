@@ -35,11 +35,9 @@ if (!empty($name) && !empty($qty) && !empty($mfd) && !empty($exd) && !empty($mrp
 
         // Close the database connection
         $db->close();
-        header("location:/login/page/");
+        header("location:/login/page/?success");
     }
 } else {
     echo "One or more required fields are empty.";
-    header("location:/login/page/");
-
+    header("location:/login/page/?error");
 }
-?>
