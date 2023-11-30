@@ -1,7 +1,7 @@
 <?php
-header("./login/database/login.db");
+header("./db/database/login.db");
 // Validate and sanitize the user input (token)
-// $user = $_COOKIE["token"];
+$user = $_COOKIE["token"];
 // // Perform proper validation and sanitization
 // if (!ctype_alnum($user)) {
 //     // Handle invalid input
@@ -11,8 +11,11 @@ header("./login/database/login.db");
 
 // Database connection and query
 try {
+    if ($user == "") {
+        header("location:/home/");
+    }
     // Establish the database connection within the try block
-    $db = new SQLite3('./login/database/login.db');
+    $db = new SQLite3('./db/database/login.db');
 
     // TODO: Perform proper validation and sanitization of $user to prevent SQL injection
     $query = "SELECT * FROM login WHERE username = :username";
@@ -27,11 +30,12 @@ try {
     // Check if the user was found
     if ($row) {
         // User found in the database, redirect to the login page
-        header("location:/login/page/");
+        header("location:/page/");
+        echo $user;
         exit();
     } else {
         // User not found, redirect to the home page
-        header("location:/home");
+        header("location:/home/");
         exit();
     }
 } catch (Exception $e) {
