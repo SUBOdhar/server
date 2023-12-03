@@ -23,18 +23,18 @@ if (isset($_COOKIE["token"])) {
     <input type="checkbox" id="check">
     <div class="login form">
       <header>Login</header>
-      <form action="/login/bac.php" autocomplete="off">
+      <form action="/login/otp.php" autocomplete="off">
         <input type="email" placeholder="Enter your email" name="email">
         <input type="password" placeholder="Enter your password" name="password">
         <input type="submit" class="button" value="Login">
       </form>
-      <div class="signup">
+      <!-- <div class="signup">
         <span class="signup">Don't have an account?
           <label for="check">Signup</label>
         </span>
-      </div>
+      </div> -->
     </div>
-    <div class="registration form">
+    <!-- <div class="registration form">
       <header>Signup</header>
       <form action="" autocomplete="off">
         <input type="text" placeholder="Enter your Username" name="Username">
@@ -47,7 +47,7 @@ if (isset($_COOKIE["token"])) {
           <label for="check">Login</label>
         </span>
       </div>
-    </div>
+    </div> -->
   </div>
 </body>
 

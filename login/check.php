@@ -13,24 +13,59 @@ if ($output == $otp) {
     {
         function __construct()
         {
-            $this->open('/login/database/login.db');
+            $this->open('login.db');
         }
     }
-    $db = new MyDB();
-    $sql = "INSERT INTO login (username, password, email) VALUES ('$user', '$pass', '$email')";
 
-    // Execute the INSERT statement
-    $ret = $db->exec($sql);
-    if (!$ret) {
-        echo $db->lastErrorMsg();
+    // Create an instance of the database
+    $db = new MyDB();
+
+    // Check if the database was opened successfully
+    if (!$db) {
+        die("Database error: " . $db->lastErrorMsg());
+    } else {
+        echo 'a';
     }
 
-    $a = base64_encode(md5(uniqid(mt_rand(), true)));
-    $fingerp = $_SERVER['REMOTE_ADDR'] . $a . gethostname();
-    setcookie("token", $fingerp, time() + 2 * 24 * 60 * 60); //set cookie
-    header('location:/login/page/');
-} else {
-    header('location:/login/signup/');
+    // Debugging: Display a message if the database connection is successful
+    echo "Debugging: Database connection successful<br>";
+
+    // Define the SQL query to select user data using a prepared statement
+    $sql = "SELECT * FROM login WHERE email = :email";
+    $stmt = $db->prepare($sql);
+
+    // Bind the parameter
+    $stmt->bindParam(':email', $email, SQLITE3_TEXT);
+
+    // Execute the prepared statement
+    $result = $stmt->execute();
+
+    // Check if the query was successful
+    if (!$result) {
+        echo "Database error: " . $db->lastErrorMsg();
+    } else {
+        // Fetch the user data
+        $row = $result->fetchArray(SQLITE3_ASSOC);
+
+        // Debugging: Display the fetched user data
+        echo "Debugging: Fetched User Data - " . print_r($row, true) . "<br>";
+        $n = $row['password'];
+        $u = $row['username'];
+        // Check if the user exists and the password is correct
+        if ($password == $n) {
+
+            // Set a cookie with the username
+            setcookie("token", $u, time() + 2 * 24 * 60 * 60, "/"); // Set cookie
+
+            // Debugging: Display a message after setting the cookie
+            echo "Debugging: Cookie set successfully<br>";
+
+            header('location: /page/');
+
+        } else {
+            header('location: /login/');
+        }
+    }
 }
 
 

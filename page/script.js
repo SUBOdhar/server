@@ -40,3 +40,6 @@ btn.onclick = function () {
 //      content.style.visibility = "visible";
 //    }, 5000); // 10 seconds in milliseconds
 //  });
+function rms() {
+  window.location.href = "remocecookie.php";
+}

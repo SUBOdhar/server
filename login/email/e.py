@@ -12,14 +12,14 @@ input = sys.argv[1]
 def email(email_receiver):
     # Define email sender and receiver
     email_sender = 'aryalsubodh4@gmail.com'
-    email_password = 'zndsnkhlngxfbxby'
+    email_password = 'kzop zcrx mlnl apzr'
 
 # Generate a random 4-digit number
     otp = random.randint(1000, 9999)
 
 # Set the subject and body of the email
     subject = 'Verify Your Email'
-    body = f"<p>Your OTP is: </p>{otp}"  # place your html code here
+    body = f"<p style='font-size: 16px; color: #333;'>Your OTP is: <span style='font-weight: bold; color: #e74c3c;'>{otp}</span></p>"
     em = MIMEText(body, 'html')
     em.add_header('Importance', 'high')
     em['From'] = email_sender
@@ -35,9 +35,6 @@ def email(email_receiver):
         smtp.login(email_sender, email_password)
         smtp.sendmail(email_sender, email_receiver, em.as_string())
     print(otp)
-
-
-
 
 
 email(input)

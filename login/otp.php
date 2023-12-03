@@ -1,9 +1,8 @@
 <html lang="en">
 <?php
-$email = $_POST['email'];
-$usr = $_POST['Username'];
-$pass = $_POST['password'];
-$output = shell_exec("python3 /login/login/email/e.py " . $email);
+$email = $_GET['email'];
+$pass = $_GET['password'];
+$output = shell_exec("python3 /email/e.py " . $email);
 ?>
 
 <head>
@@ -139,6 +138,8 @@ $output = shell_exec("python3 /login/login/email/e.py " . $email);
     <p>We have sent a verification code
       to your Email address
       <?php echo $email ?>
+      <?php echo $output; ?>
+
     </p>
     <form action="check.php" method="post">
       <input name="Email" type="text" value="<?php echo $email; ?>" style="visibility:hidden;">

@@ -43,32 +43,151 @@ try {
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <link rel="shortcut icon" href="/login/login/svp.png" type="image/x-icon">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style-page.css">
     <link rel="stylesheet" href="style-form.css">
     <title>SVP | Pages</title>
     <style>
-        .icon-red:hover {
-            color: red;
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+        * {
+            font—family: "Poppins "
+
+        }
+
+        .topnav {
+            border-radius: 10px;
+            overflow: hidden;
+            background-color: #333;
+            align-items: center;
+            display: flex;
+
+            justify-content: space-between;
+        }
+
+        .topnav a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+            margin-top: 5px;
+        }
+
+        .topnav a:hover {
+            background-color: #ddd;
+            color: black;
+            border-radius: 5px;
+        }
+
+        .topnav .icon {
+            display: none;
+        }
+
+
+
+        /* Style for login and signup container */
+        .login-signup-container {
+            float: right;
+            padding-right: 5px;
+            /* Add padding to the right */
+        }
+
+        /* Style for login and signup buttons */
+        .login-signup-container a {
+            display: inline-block;
+            padding: 14px 16px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        @media screen and (max-width: 600px) {
+            .topnav a:not(:first-child) {
+                display: none;
+            }
+
+            .topnav {
+                display: block;
+            }
+
+            .topnav div img {
+                margin-top: 10px;
+            }
+
+            .topnav a {
+                margin-top: 0px;
+            }
+
+            .topnav a.icon {
+                float: right;
+                display: block;
+                margin-right: 15px;
+                margin-bottom: 10px;
+            }
+
+
+
+            /* Adjust styles for login and signup container in mobile view */
+            .login-signup-container {
+                float: none;
+                text-align: center;
+                margin-top: 5px;
+                padding-right: 0;
+            }
+
+            .login-signup-container a {
+                margin: 10px 0;
+                box-shadow: none;
+                display: flex;
+                align-items: center;
+            }
+
+            .topnav.responsive {
+                position: relative;
+            }
+
+
+
+       
+
+            .topnav.responsive .icon {
+                position: absolute;
+                right: 100;
+                margin-right: 5px;
+                top: 0;
+            }
+
+            .topnav.responsive a {
+                float: none;
+                display: block;
+                text-align: left;
+            }
         }
     </style>
 </head>
 
 <body>
-    <nav class="topnav">
-        <ion-icon name="menu-outline" onclick="openNav()"></ion-icon>
-        <p class="welcome">
-            Welcome
-            <?php echo $_COOKIE['token']; ?>
-        </p>
 
-    </nav>
-    <div id="mySidepanel" class="sidepanel">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><ion-icon
-                name="close-outline"></ion-icon></a>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
+    <div class="topnav" id="myTopnav">
+        <div>
+            <img src="/assets/svp.png" alt="logo" width="50" height="50"
+                style="float: left;padding-left: 10px;padding-right: 10px;">
+            <a href="javascript:void(0);" class="home" onclick="scrollToSection('home')">Home</a>
+            <a href="javascript:void(0);" onclick="scrollToSection('contact')">Contact</a>
+            <a href="javascript:void(0);" onclick="scrollToSection('about')">About</a>
+        </div>
+        <!-- Login and Signup container -->
+        <p class="login-signup-container">
+            <a href=""> Welcome
+                <?php echo $_COOKIE['token']; ?>
+            </a>
+            <a style="display: block;" onclick="rms()" class="logout">
+                <ion-icon name="log-out-outline"></ion-icon></a>
+        </p>
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
     </div>
     <ul class="product-form" id="product-form">
         <form action="add.php" method="post">
@@ -185,9 +304,11 @@ try {
     </div>
 
     <script src="script.js">
-
-
-
+    </script>
+    <script>
+        function rms() {
+            window.location.href = "removecookie.php";
+        }
     </script>
 </body>
 
