@@ -1,0 +1,2 @@
+CREATE USER 'svp'@'localhost' IDENTIFIED BY 'Svp1234@';
+ ALTER USER 'svp'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Svp1234@';

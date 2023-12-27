@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Public IP</title>
+</head>
+
+<body>
+
+    <p>Your public IP address is: <span id="publicIp"></span></p>
+    <p>Country: <span id="country"></span></p>
+    <p>City: <span id="city"></span></p>
+    <p>Latitude: <span id="latitude"></span></p>
+    <p>Longitude: <span id="longitude"></span></p>
+
+    <script>
+        // Select the span elements by their ids
+        const publicIpElement = document.getElementById('publicIp');
+        const countryElement = document.getElementById('country');
+        const cityElement = document.getElementById('city');
+        const latitudeElement = document.getElementById('latitude');
+        const longitudeElement = document.getElementById('longitude');
+
+        // Make a GET request to ipinfo.io to get public IP and location details
+        fetch('https://ipinfo.io/json')
+            .then(response => response.json())
+            .then(data => {
+                // Extract and display the public IP address, country, city, latitude, and longitude
+                const publicIp = data.ip;
+                const country = data.country;
+                const city = data.city;
+                const { loc } = data;
+                const [latitude, longitude] = loc.split(',');
+
+                publicIpElement.textContent = publicIp;
+                countryElement.textContent = country;
+                cityElement.textContent = city;
+                latitudeElement.textContent = latitude;
+                longitudeElement.textContent = longitude;
+
+                // Send the data to the server for database insertion
+                sendDataToServer(publicIp, country, city, latitude, longitude);
+            })
+            .catch(error => {
+                console.error('Error fetching IP info:', error);
+                publicIpElement.textContent = 'Error fetching IP info';
+                countryElement.textContent = 'N/A';
+                cityElement.textContent = 'N/A';
+                latitudeElement.textContent = 'N/A';
+                longitudeElement.textContent = 'N/A';
+            });
+
+        function sendDataToServer(publicIp, country, city, latitude, longitude) {
+            // Create a FormData object to send data to the server
+            const formData = new FormData();
+            formData.append('publicIp', publicIp);
+            formData.append('country', country);
+            formData.append('city', city);
+            formData.append('latitude', latitude);
+            formData.append('longitude', longitude);
+
+            // Make a POST request to the server to insert data into the database
+            fetch('insert_data.php', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.text())
+                .then(result => {
+                    console.log('Data inserted into the database:', result);
+                })
+                .catch(error => {
+                    console.error('Error inserting data into the database:', error);
+                });
+        }
+
+    </script>
+
+</body>
+
+
+</html>
