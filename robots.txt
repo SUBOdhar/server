@@ -1,0 +1,14 @@
+user-agent: *
+allow: /contact/index.html
+allow: /index.php
+allow: /home/svp.png
+disallow: /api/*
+disallow: /assets/*
+disallow: /db/*
+disallow: /error/*
+disallow: /imp/*
+disallow: /login/*
+disallow: /page/*
+disallow: /power/*
+disallow: /TBS0.1/*
+disallow: /info.php
